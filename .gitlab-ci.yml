@@ -64,8 +64,8 @@ Linux/Targeted CC GCC Static:
     CXX: g++
   script:
     - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
+    - cmake --build build
+    - cmake --build build --target ccov
 
 Linux/Targeted CC GCC Shared:
   image: stabletec/build-core:fedora
@@ -83,8 +83,8 @@ Linux/Targeted CC GCC Shared:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
     - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
+    - cmake --build build
+    - cmake --build build --target ccov
 
 Linux/Targeted CC Clang Static:
   image: stabletec/build-core:fedora
@@ -101,9 +101,9 @@ Linux/Targeted CC Clang Static:
     CXX: clang++
   script:
     - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-report
 
 Linux/Targeted CC Clang Shared:
   image: stabletec/build-core:fedora
@@ -121,9 +121,9 @@ Linux/Targeted CC Clang Shared:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
     - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-report
 
 macOS/Targeted CC AppleClang Static:
   stage: Targeted Code Coverage
@@ -135,9 +135,9 @@ macOS/Targeted CC AppleClang Static:
     - ${ARCH}
   script:
     - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-report
 
 macOS/Targeted CC AppleClang Shared:
   stage: Targeted Code Coverage
@@ -151,9 +151,9 @@ macOS/Targeted CC AppleClang Shared:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
     - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-report
 
 macOS/Targeted CC Clang Static:
   stage: Targeted Code Coverage
@@ -168,9 +168,9 @@ macOS/Targeted CC Clang Static:
     CXX: clang++
   script:
     - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-report
 
 macOS/Targeted CC Clang Shared:
   stage: Targeted Code Coverage
@@ -186,9 +186,9 @@ macOS/Targeted CC Clang Shared:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
     - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-report
 
 Windows/Targeted CC Clang Static:
   image: stabletec/build-core:windows-ltsc2025
@@ -206,9 +206,9 @@ Windows/Targeted CC Clang Static:
     CXX: clang++
   script:
     - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-report
 
 Windows/Targeted CC Clang Shared:
   image: stabletec/build-core:windows-ltsc2025
@@ -227,9 +227,9 @@ Windows/Targeted CC Clang Shared:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
     - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-report
 
 # All Code Coverage
 
@@ -248,9 +248,9 @@ Linux/All CC GCC Static:
     CXX: g++
   script:
     - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-all
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-all
 
 Linux/All CC GCC Shared:
   image: stabletec/build-core:fedora
@@ -268,9 +268,9 @@ Linux/All CC GCC Shared:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
     - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-all
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-all
 
 Linux/All CC Clang Static:
   image: stabletec/build-core:fedora
@@ -287,10 +287,10 @@ Linux/All CC Clang Static:
     CXX: clang++
   script:
     - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov-all
-    - ninja -C build ccov-report
-    - ninja -C build ccov-all-report
+    - cmake --build build
+    - cmake --build build --target ccov-all
+    - cmake --build build --target ccov-report
+    - cmake --build build --target ccov-all-report
 
 Linux/All CC Clang Shared:
   image: stabletec/build-core:fedora
@@ -308,11 +308,11 @@ Linux/All CC Clang Shared:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
     - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-all
-    - ninja -C build ccov-report
-    - ninja -C build ccov-all-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-all
+    - cmake --build build --target ccov-report
+    - cmake --build build --target ccov-all-report
 
 macOS/All CC AppleClang Static:
   stage: All Code Coverage
@@ -324,10 +324,10 @@ macOS/All CC AppleClang Static:
     - ${ARCH}
   script:
     - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov-all
-    - ninja -C build ccov-report
-    - ninja -C build ccov-all-report
+    - cmake --build build
+    - cmake --build build --target ccov-all
+    - cmake --build build --target ccov-report
+    - cmake --build build --target ccov-all-report
 
 macOS/All CC AppleClang Shared:
   stage: All Code Coverage
@@ -341,11 +341,11 @@ macOS/All CC AppleClang Shared:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
     - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-all
-    - ninja -C build ccov-report
-    - ninja -C build ccov-all-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-all
+    - cmake --build build --target ccov-report
+    - cmake --build build --target ccov-all-report
 
 macOS/All CC Clang Static:
   stage: All Code Coverage
@@ -360,10 +360,10 @@ macOS/All CC Clang Static:
     CXX: clang++
   script:
     - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov-all
-    - ninja -C build ccov-report
-    - ninja -C build ccov-all-report
+    - cmake --build build
+    - cmake --build build --target ccov-all
+    - cmake --build build --target ccov-report
+    - cmake --build build --target ccov-all-report
 
 macOS/All CC Clang Shared:
   stage: All Code Coverage
@@ -379,11 +379,11 @@ macOS/All CC Clang Shared:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
     - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-all
-    - ninja -C build ccov-report
-    - ninja -C build ccov-all-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-all
+    - cmake --build build --target ccov-report
+    - cmake --build build --target ccov-all-report
 
 Windows/All CC Clang Static:
   image: stabletec/build-core:windows-ltsc2025
@@ -401,11 +401,11 @@ Windows/All CC Clang Static:
     CXX: clang++
   script:
     - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-all
-    - ninja -C build ccov-report
-    - ninja -C build ccov-all-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-all
+    - cmake --build build --target ccov-report
+    - cmake --build build --target ccov-all-report
 
 Windows/All CC Clang Shared:
   image: stabletec/build-core:windows-ltsc2025
@@ -424,11 +424,11 @@ Windows/All CC Clang Shared:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
     - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
-    - ninja -C build
-    - ninja -C build ccov
-    - ninja -C build ccov-all
-    - ninja -C build ccov-report
-    - ninja -C build ccov-all-report
+    - cmake --build build
+    - cmake --build build --target ccov
+    - cmake --build build --target ccov-all
+    - cmake --build build --target ccov-report
+    - cmake --build build --target ccov-all-report
 
 # Sanitizers
 
@@ -444,7 +444,7 @@ Windows/All CC Clang Shared:
     - ${ARCH}
   script:
     - cmake -S example/all -B build -G Ninja -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
-    - ninja -C build
+    - cmake --build build
     - ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}
 
 .linux_failure_template: &linux_failure_template
@@ -459,7 +459,7 @@ Windows/All CC Clang Shared:
     - ${ARCH}
   script:
     - cmake -S example/all -B build -G Ninja -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
-    - ninja -C build
+    - cmake --build build
     - "! ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}"
 
 Linux/Static Analysis:
@@ -540,7 +540,7 @@ Linux/Clang/UndefinedSanitizer:
     - ${ARCH}
   script:
     - cmake -S example/all -B build -G Ninja -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
-    - ninja -C build
+    - cmake --build build
     - ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}
 
 .macos_failure_template: &macos_failure_template
@@ -553,7 +553,7 @@ Linux/Clang/UndefinedSanitizer:
     - ${ARCH}
   script:
     - cmake -S example/all -B build -G Ninja -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
-    - ninja -C build
+    - cmake --build build
     - "! ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}"
 
 macOS/AppleClang/Baseline:
@@ -621,5 +621,5 @@ Windows/MSVC/Address Sanitizer:
     - ${ARCH}
   script:
     - cmake -S example/all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Debug -D EXAMPLE_USE_SANITIZER=address $env:CMAKE_OPTIONS
-    - ninja -C build
+    - cmake --build build
     - ctest --test-dir build --output-on-failure $env:CTEST_OPTIONS ; if ($? -ne 0) { exit 1 } else { exit 0 }
