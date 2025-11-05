@@ -55,6 +55,7 @@ Linux/Targeted CC GCC Static:
   parallel:
     matrix:
       - ARCH: [amd64, arm64, ppc64le]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - container
     - linux
@@ -63,7 +64,7 @@ Linux/Targeted CC GCC Static:
     CC: gcc
     CXX: g++
   script:
-    - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
 
@@ -73,6 +74,7 @@ Linux/Targeted CC GCC Shared:
   parallel:
     matrix:
       - ARCH: [amd64, arm64, ppc64le]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - container
     - linux
@@ -82,7 +84,7 @@ Linux/Targeted CC GCC Shared:
     CXX: g++
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
-    - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
 
@@ -92,6 +94,7 @@ Linux/Targeted CC Clang Static:
   parallel:
     matrix:
       - ARCH: [amd64, arm64, ppc64le]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - container
     - linux
@@ -100,7 +103,7 @@ Linux/Targeted CC Clang Static:
     CC: clang
     CXX: clang++
   script:
-    - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-report
@@ -111,6 +114,7 @@ Linux/Targeted CC Clang Shared:
   parallel:
     matrix:
       - ARCH: [amd64, arm64, ppc64le]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - container
     - linux
@@ -120,7 +124,7 @@ Linux/Targeted CC Clang Shared:
     CXX: clang++
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
-    - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-report
@@ -130,11 +134,12 @@ macOS/Targeted CC AppleClang Static:
   parallel:
     matrix:
       - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - macos
     - ${ARCH}
   script:
-    - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-report
@@ -144,13 +149,14 @@ macOS/Targeted CC AppleClang Shared:
   parallel:
     matrix:
       - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - macos
     - ${ARCH}
   variables:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
-    - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-report
@@ -160,6 +166,7 @@ macOS/Targeted CC Clang Static:
   parallel:
     matrix:
       - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - macos
     - ${ARCH}
@@ -167,7 +174,7 @@ macOS/Targeted CC Clang Static:
     CC: clang
     CXX: clang++
   script:
-    - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-report
@@ -177,6 +184,7 @@ macOS/Targeted CC Clang Shared:
   parallel:
     matrix:
       - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - macos
     - ${ARCH}
@@ -185,7 +193,7 @@ macOS/Targeted CC Clang Shared:
     CXX: clang++
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
-    - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-report
@@ -196,6 +204,7 @@ Windows/Targeted CC Clang Static:
   parallel:
     matrix:
       - ARCH: [amd64]
+        BUILD_SYSTEM: ["Ninja"]
   tags:
     - container
     - windows
@@ -205,7 +214,7 @@ Windows/Targeted CC Clang Static:
     CC: clang
     CXX: clang++
   script:
-    - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-report
@@ -216,6 +225,7 @@ Windows/Targeted CC Clang Shared:
   parallel:
     matrix:
       - ARCH: [amd64]
+        BUILD_SYSTEM: ["Ninja"]
   tags:
     - container
     - windows
@@ -226,7 +236,7 @@ Windows/Targeted CC Clang Shared:
     CXX: clang++
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
-    - cmake -S example/code-coverage-target/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-report
@@ -239,6 +249,7 @@ Linux/All CC GCC Static:
   parallel:
     matrix:
       - ARCH: [amd64, arm64, ppc64le]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - container
     - linux
@@ -247,7 +258,7 @@ Linux/All CC GCC Static:
     CC: gcc
     CXX: g++
   script:
-    - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-all
@@ -258,6 +269,7 @@ Linux/All CC GCC Shared:
   parallel:
     matrix:
       - ARCH: [amd64, arm64, ppc64le]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - container
     - linux
@@ -267,7 +279,7 @@ Linux/All CC GCC Shared:
     CXX: g++
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
-    - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-all
@@ -278,6 +290,7 @@ Linux/All CC Clang Static:
   parallel:
     matrix:
       - ARCH: [amd64, arm64, ppc64le]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - container
     - linux
@@ -286,7 +299,7 @@ Linux/All CC Clang Static:
     CC: clang
     CXX: clang++
   script:
-    - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov-all
     - cmake --build build --target ccov-report
@@ -298,6 +311,7 @@ Linux/All CC Clang Shared:
   parallel:
     matrix:
       - ARCH: [amd64, arm64, ppc64le]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - container
     - linux
@@ -307,7 +321,7 @@ Linux/All CC Clang Shared:
     CXX: clang++
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
-    - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-all
@@ -319,11 +333,12 @@ macOS/All CC AppleClang Static:
   parallel:
     matrix:
       - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - macos
     - ${ARCH}
   script:
-    - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov-all
     - cmake --build build --target ccov-report
@@ -334,13 +349,14 @@ macOS/All CC AppleClang Shared:
   parallel:
     matrix:
       - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - macos
     - ${ARCH}
   variables:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
-    - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-all
@@ -352,6 +368,7 @@ macOS/All CC Clang Static:
   parallel:
     matrix:
       - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - macos
     - ${ARCH}
@@ -359,7 +376,7 @@ macOS/All CC Clang Static:
     CC: clang
     CXX: clang++
   script:
-    - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov-all
     - cmake --build build --target ccov-report
@@ -370,6 +387,7 @@ macOS/All CC Clang Shared:
   parallel:
     matrix:
       - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - macos
     - ${ARCH}
@@ -378,7 +396,7 @@ macOS/All CC Clang Shared:
     CXX: clang++
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
-    - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-all
@@ -391,6 +409,7 @@ Windows/All CC Clang Static:
   parallel:
     matrix:
       - ARCH: [amd64]
+        BUILD_SYSTEM: ["Ninja"]
   tags:
     - container
     - windows
@@ -400,7 +419,7 @@ Windows/All CC Clang Static:
     CC: clang
     CXX: clang++
   script:
-    - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-all
@@ -413,6 +432,7 @@ Windows/All CC Clang Shared:
   parallel:
     matrix:
       - ARCH: [amd64]
+        BUILD_SYSTEM: ["Ninja"]
   tags:
     - container
     - windows
@@ -423,7 +443,7 @@ Windows/All CC Clang Shared:
     CXX: clang++
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
-    - cmake -S example/code-coverage-all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
+    - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
     - cmake --build build --target ccov
     - cmake --build build --target ccov-all
@@ -438,12 +458,13 @@ Windows/All CC Clang Shared:
   parallel:
     matrix:
       - ARCH: [amd64, arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - container
     - linux
     - ${ARCH}
   script:
-    - cmake -S example/all -B build -G Ninja -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
+    - cmake -S example/all -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
     - cmake --build build
     - ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}
 
@@ -453,12 +474,13 @@ Windows/All CC Clang Shared:
   parallel:
     matrix:
       - ARCH: [amd64, arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - container
     - linux
     - ${ARCH}
   script:
-    - cmake -S example/all -B build -G Ninja -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
+    - cmake -S example/all -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
     - cmake --build build
     - "! ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}"
 
@@ -535,11 +557,12 @@ Linux/Clang/UndefinedSanitizer:
   parallel:
     matrix:
       - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - macos
     - ${ARCH}
   script:
-    - cmake -S example/all -B build -G Ninja -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
+    - cmake -S example/all -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
     - cmake --build build
     - ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}
 
@@ -548,11 +571,12 @@ Linux/Clang/UndefinedSanitizer:
   parallel:
     matrix:
       - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
   tags:
     - macos
     - ${ARCH}
   script:
-    - cmake -S example/all -B build -G Ninja -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
+    - cmake -S example/all -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
     - cmake --build build
     - "! ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}"
 
@@ -614,12 +638,13 @@ Windows/MSVC/Address Sanitizer:
   parallel:
     matrix:
       - ARCH: [amd64]
+        BUILD_SYSTEM: ["Ninja"]
   tags:
     - container
     - windows
     - ltsc2025
     - ${ARCH}
   script:
-    - cmake -S example/all/ -B build -G Ninja -D CMAKE_BUILD_TYPE=Debug -D EXAMPLE_USE_SANITIZER=address $env:CMAKE_OPTIONS
+    - cmake -S example/all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Debug -D EXAMPLE_USE_SANITIZER=address $env:CMAKE_OPTIONS
     - cmake --build build
     - ctest --test-dir build --output-on-failure $env:CTEST_OPTIONS ; if ($? -ne 0) { exit 1 } else { exit 0 }
