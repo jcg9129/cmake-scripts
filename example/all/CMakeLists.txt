@@ -35,8 +35,7 @@ enable_testing()
 # Sanitizers
 include(sanitizers)
 
-set_sanitizer_options(address DEFAULT -fsanitize-address-use-after-scope
-                      -fsanitize-address-use-after-return=runtime)
+set_sanitizer_options(address DEFAULT)
 set_sanitizer_options(leak DEFAULT)
 set_sanitizer_options(memory DEFAULT)
 set_sanitizer_options(memorywithorigins DEFAULT SANITIZER memory
