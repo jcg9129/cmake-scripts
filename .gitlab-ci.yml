@@ -135,9 +135,14 @@ macOS/Targeted CC AppleClang Static:
     matrix:
       - ARCH: [arm64]
         BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
+        TOOLING: [xclt]
+      - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja", "Xcode"]
+        TOOLING: [xcode]
   tags:
     - macos
     - ${ARCH}
+    - ${TOOLING}
   script:
     - cmake -S example/code-coverage-target/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
@@ -150,9 +155,14 @@ macOS/Targeted CC AppleClang Shared:
     matrix:
       - ARCH: [arm64]
         BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
+        TOOLING: [xclt]
+      - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja", "Xcode"]
+        TOOLING: [xcode]
   tags:
     - macos
     - ${ARCH}
+    - ${TOOLING}
   variables:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
@@ -170,6 +180,7 @@ macOS/Targeted CC Clang Static:
   tags:
     - macos
     - ${ARCH}
+    - xclt
   variables:
     CC: clang
     CXX: clang++
@@ -188,6 +199,7 @@ macOS/Targeted CC Clang Shared:
   tags:
     - macos
     - ${ARCH}
+    - xclt
   variables:
     CC: clang
     CXX: clang++
@@ -334,9 +346,14 @@ macOS/All CC AppleClang Static:
     matrix:
       - ARCH: [arm64]
         BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
+        TOOLING: [xclt]
+      - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja", "Xcode"]
+        TOOLING: [xcode]
   tags:
     - macos
     - ${ARCH}
+    - ${TOOLING}
   script:
     - cmake -S example/code-coverage-all/ -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Release -D CODE_COVERAGE=ON ${CMAKE_OPTIONS}
     - cmake --build build
@@ -350,9 +367,14 @@ macOS/All CC AppleClang Shared:
     matrix:
       - ARCH: [arm64]
         BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
+        TOOLING: [xclt]
+      - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja", "Xcode"]
+        TOOLING: [xcode]
   tags:
     - macos
     - ${ARCH}
+    - ${TOOLING}
   variables:
     CMAKE_OPTIONS: -D BUILD_SHARED_LIBS=ON
   script:
@@ -372,6 +394,7 @@ macOS/All CC Clang Static:
   tags:
     - macos
     - ${ARCH}
+    - xclt
   variables:
     CC: clang
     CXX: clang++
@@ -391,6 +414,7 @@ macOS/All CC Clang Shared:
   tags:
     - macos
     - ${ARCH}
+    - xclt
   variables:
     CC: clang
     CXX: clang++
@@ -552,85 +576,121 @@ Linux/Clang/UndefinedSanitizer:
     CMAKE_OPTIONS: -D EXAMPLE_USE_SANITIZER=undefined
   <<: *linux_failure_template
 
-.macos_success_template: &macos_success_template
+.macos_failure_template_xcode: &macos_failure_template_xcode
   stage: Sanitizers
   parallel:
     matrix:
       - ARCH: [arm64]
         BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
+        TOOLING: [xclt]
+      - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja", "Xcode"]
+        TOOLING: [xcode]
   tags:
     - macos
     - ${ARCH}
+    - ${TOOLING}
   script:
     - cmake -S example/all -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
     - cmake --build build
-    - ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}
+    - "! ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}"
 
-.macos_failure_template: &macos_failure_template
+.macos_failure_template_xclt: &macos_failure_template_xclt
   stage: Sanitizers
   parallel:
     matrix:
       - ARCH: [arm64]
         BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
+        TOOLING: [xclt]
   tags:
     - macos
     - ${ARCH}
+    - ${TOOLING}
   script:
     - cmake -S example/all -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
     - cmake --build build
     - "! ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}"
 
 macOS/AppleClang/Baseline:
-  <<: *macos_success_template
+  stage: Sanitizers
+  parallel:
+    matrix:
+      - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
+        TOOLING: [xclt]
+      - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja", "Xcode"]
+        TOOLING: [xcode]
+  tags:
+    - macos
+    - ${ARCH}
+    - ${TOOLING}
+  script:
+    - cmake -S example/all -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
+    - cmake --build build
+    - ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}
 
 macOS/Clang/Baseline:
+  stage: Sanitizers
+  parallel:
+    matrix:
+      - ARCH: [arm64]
+        BUILD_SYSTEM: ["Unix Makefiles", "Ninja"]
+        TOOLING: [xclt]
+  tags:
+    - macos
+    - ${ARCH}
+    - ${TOOLING}
   variables:
     CC: clang
     CXX: clang++
-  <<: *macos_success_template
+  script:
+    - cmake -S example/all -B build -G "${BUILD_SYSTEM}" -D CMAKE_BUILD_TYPE=Debug ${CMAKE_OPTIONS}
+    - cmake --build build
+    - ctest --test-dir build --output-on-failure ${CTEST_OPTIONS}
 
 macOS/AppleClang/ThreadSanitizer:
   variables:
     CMAKE_OPTIONS: -D EXAMPLE_USE_SANITIZER=thread
-  <<: *macos_failure_template
+  <<: *macos_failure_template_xcode
 
 macOS/Clang/ThreadSanitizer:
   variables:
     CC: clang
     CXX: clang++
     CMAKE_OPTIONS: -D EXAMPLE_USE_SANITIZER=thread
-  <<: *macos_failure_template
+  <<: *macos_failure_template_xclt
 
 macOS/AppleClang/AddressSanitizer:
   variables:
     CMAKE_OPTIONS: -D EXAMPLE_USE_SANITIZER=address
-  <<: *macos_failure_template
+  <<: *macos_failure_template_xcode
 
 macOS/Clang/AddressSanitizer:
   variables:
     CC: clang
     CXX: clang++
     CMAKE_OPTIONS: -D EXAMPLE_USE_SANITIZER=address
-  <<: *macos_failure_template
+  <<: *macos_failure_template_xclt
 
 macOS/Clang/LeakSanitizer:
   variables:
     CC: clang
     CXX: clang++
     CMAKE_OPTIONS: -D EXAMPLE_USE_SANITIZER=leak
-  <<: *macos_failure_template
+  <<: *macos_failure_template_xclt
 
 macOS/AppleClang/UndefinedSanitizer:
   variables:
     CMAKE_OPTIONS: -D EXAMPLE_USE_SANITIZER=undefined
-  <<: *macos_failure_template
+  <<: *macos_failure_template_xcode
 
 macOS/Clang/UndefinedSanitizer:
   variables:
     CC: clang
     CXX: clang++
     CMAKE_OPTIONS: -D EXAMPLE_USE_SANITIZER=undefined
-  <<: *macos_failure_template
+  <<: *macos_failure_template_xclt
 
 Windows/MSVC/Address Sanitizer:
   image: stabletec/build-core:windows-ltsc2025
